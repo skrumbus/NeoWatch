@@ -117,10 +117,14 @@ uint32_t ColorStuff::opposite(uint32_t a)
                getBlue(0xffffffff - a),
                getAlpha(a));
 }
-uint32_t ColorStuff::rainbowify(uint8_t i, uint8_t j)
+uint32_t ColorStuff::rainbowify(uint8_t i)
 {
-  float index = constrain(betterMap(i, 0.0, j, 0.0, 5.99), 0.0, 5.99);
-  return mix(rainbow[(int)floor(index)], rainbow[(((int)floor(index)) + 1) % 6], index - (float)floor(index));
+  return rainbow[i % RAINBOW_SIZE];
+}
+uint32_t ColorStuff::fadeRainbowify(uint8_t i, uint8_t j)
+{
+  float index = constrain(betterMap(i, 0.0, j, 0.0, (float)RAINBOW_SIZE - .01), 0.0, (float)RAINBOW_SIZE - .01);
+  return mix(rainbow[(int)floor(index)], rainbow[(((int)floor(index)) + 1) % RAINBOW_SIZE], index - (float)floor(index));
 }
 float ColorStuff::betterMap(float x, float in_min, float in_max, float out_min, float out_max)
 {

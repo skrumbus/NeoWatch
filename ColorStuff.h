@@ -3,6 +3,8 @@
 
 #include<stdint.h>
 
+#define RAINBOW_SIZE 6
+
 class ColorStuff
 {
   public:
@@ -20,7 +22,8 @@ class ColorStuff
     static uint32_t purple(); //returns the color purple
     static uint32_t white(); //returns the color white
     static uint32_t black(); //returns the color black
-    static uint32_t rainbowify(uint8_t, uint8_t = 6); //returns kth color in rainbow (i.e. 0 = red, 5 = purple, 6 = red, so on)
+    static uint32_t fadeRainbowify(uint8_t, uint8_t = 6);
+    static uint32_t rainbowify(uint8_t); //returns kth color in rainbow (i.e. 0 = red, 5 = purple, 6 = red, so on)
     static uint32_t color(uint8_t, uint8_t, uint8_t, uint8_t); //color with alpha (or white?)
     static uint32_t color(uint8_t, uint8_t, uint8_t); //color without alpha
     static uint32_t mix(uint32_t, uint32_t, float = .5); //mixes a given percentage(0 - 1) of the second color into the first and returns the resulting color

@@ -1,6 +1,7 @@
 #include"NeoPixel_Ring.h"
 #include"Button.h"
 #include"NotificationDemo.h"
+#include"PatternSettings.h"
 #include<Adafruit_NeoPixel.h>
 
 //TO DO:

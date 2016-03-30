@@ -3,7 +3,7 @@
 
 #include<stdint.h>
 
-#define MAX_PATTERN_COLORS 12
+#define MAX_PATTERN_COLORS 2
 #define NUM_PATTERN_TYPES 5
 
 class PatternSettings
