@@ -17,6 +17,7 @@ class PatternSettings
     uint32_t colors[MAX_PATTERN_COLORS];
     uint8_t numColors;
   public:
+    PatternSettings();
     PatternSettings(uint8_t numColors, uint8_t numPixels, int16_t startPixel = 0, uint16_t displayLength = 0, uint16_t delayLength = 0, float b = 1.0);
     float getBrightness();
     void setBrightness(float);

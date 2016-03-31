@@ -2,6 +2,17 @@
 #include"ColorStuff.h"
 #include<Arduino.h>
 
+PatternSettings::PatternSettings()
+{
+  setNumPixels(0);
+  setStartPixel(0);
+  setDisplayLength(0);
+  setDelayLength(0);
+  setBrightness(0);
+  numColors = 0;
+  for(int i = 0; i < MAX_PATTERN_COLORS; i++)
+    colors[i] = 0;
+}
 PatternSettings::PatternSettings(uint8_t numColors, uint8_t numPixels, int16_t startPixel, uint16_t displayLength, uint16_t delayLength, float brightness)
 {
   setNumPixels(numPixels);
@@ -9,7 +20,7 @@ PatternSettings::PatternSettings(uint8_t numColors, uint8_t numPixels, int16_t s
   setDisplayLength(displayLength);
   setDelayLength(delayLength);
   setBrightness(brightness);
-  numColors = numColors;
+  numColors = constrain(numColors, 0, MAX_PATTERN_COLORS);
   for(int i = 0; i < MAX_PATTERN_COLORS; i++)
     colors[i] = 0;
 }

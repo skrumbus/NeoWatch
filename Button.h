@@ -12,6 +12,7 @@ class Button
     uint8_t state;
     uint16_t hold, holdTime;
   public:
+    Button();
     Button(uint8_t pin, uint8_t onState, uint16_t holdTime = 3000);
     uint8_t getState();
     bool isReleased();

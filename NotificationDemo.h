@@ -1,14 +1,14 @@
 #ifndef NOTIFICATION_DEMO_H
 #define NOTIFICATION_DEMO_H
 
-#include"NeoPixel_Ring.h"
+#include"NeoRing.h"
 #include"Button.h"
 
 class NotificationDemo
 {
   public:
-    const static uint8_t NUM_DEMOS = 4;
-    static bool demo(NeoPixel_Ring&, uint8_t, Button);
+    const static uint8_t NUM_DEMOS = 5;
+    static bool demo(NeoRing&, uint8_t, Button);
 };
 
 #endif

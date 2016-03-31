@@ -1,5 +1,12 @@
 #include"Button.h"
 
+Button::Button()
+{
+  this->pin = 255;
+  this->onState = 255;
+  setHoldTime(65535);
+  state = 0;
+}
 Button::Button(uint8_t pin, uint8_t onState, uint16_t holdTime)
 {
   this->pin = pin;
