@@ -19,7 +19,7 @@ class Button
     bool isTapped();
     bool isPressed();
     bool isHeld();
-    void update(uint16_t = 1);
+    void update(uint16_t = 0);
     void setHoldTime(uint16_t);
     uint16_t getHoldTime();
     void begin(uint8_t = INPUT_PULLUP);

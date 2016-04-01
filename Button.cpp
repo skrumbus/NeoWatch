@@ -6,6 +6,7 @@ Button::Button()
   this->onState = 0;
   setHoldTime(65535);
   state = 255;
+  hold = 0;
 }
 Button::Button(uint8_t pin, uint8_t onState, uint16_t holdTime)
 {
@@ -13,6 +14,7 @@ Button::Button(uint8_t pin, uint8_t onState, uint16_t holdTime)
   this->onState = onState;
   setHoldTime(holdTime);
   state = 0;
+  hold = 0;
 }
 uint8_t Button::getState()
 {
@@ -38,10 +40,13 @@ void Button::update(uint16_t t)
 {
   if(digitalRead(pin) == onState)
   {
+    delay(t);
     state = (state == 1 || state == 3? 3 : 1);
     hold += t;
     if(hold >= holdTime)
+    {
       state = 2;
+    }
   }
   else
     state = hold = 0;

@@ -1,7 +1,7 @@
 #include"NotificationDemo.h"
 #include"ColorStuff.h"
 
-bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
+bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button& b)
 {
   bool wasPressed = false;
   type = type % NUM_DEMOS;
@@ -36,7 +36,7 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
       bool flip = false;
       for(uint8_t i = 1; b.isPressed();)
       {
-        ring.glow(ColorStuff::blue(), ColorStuff::green(), 0);
+        ring.glow(ColorStuff::blue(), ColorStuff::green(), (float) i / 100);
         ring.show();
         delay(10);
         b.update(10);
@@ -54,7 +54,7 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
       wasPressed = b.isPressed();
       for(uint8_t i = 1; b.isPressed(); i = (i + 1) % ring.numPixels())
       {
-        ring.marquee(ColorStuff::mix(ColorStuff::green(), ColorStuff::blue()), ColorStuff::green(), 2, 2, i);
+        ring.marquee(ColorStuff::red(), ColorStuff::green(), 2, 2, i);
         ring.show();
         for(uint8_t j = 0; j < 250 && b.isPressed(); j += 10, b.update(10), delay(10));
       }

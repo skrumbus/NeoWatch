@@ -13,6 +13,9 @@ NeoClock::NeoClock(uint16_t num, uint8_t pin, neoPixelType n, DateTime now, Date
 {
   setDoShowMinute(true);
   setDoShowSecond(true);
+  doMix = false;
+  hasAlarm = false;
+  hasNotification = false;
 }
 Button NeoClock::getShowButton()
 {
@@ -70,7 +73,7 @@ void NeoClock::update(RtcDateTime t)
 {
   update(DateTime(t.Second(), t.Minute(), t.Hour(), t.Day(), t.Month(), t.Year()));
 }
-void NeoClock::showTime(bool doMix)
+void NeoClock::showTime()
 {
   if(doMix)
   {
@@ -152,8 +155,7 @@ void NeoClock::buttonResponse()
     bool wasHeld = false, wasTapped = getSettingButton().isTapped();
     while(getSettingButton().isPressed() && !wasHeld)
     {
-      Serial.println("wat");
-      settingButton.update();
+      settingButton.update(1);
       wasHeld = getSettingButton().isHeld();
     }
     if(wasHeld)
@@ -177,10 +179,10 @@ void NeoClock::incrementBrightness(bool isAlreadyShowingSomething)
     {
       flash(0xffffff);
       show();
-      delay(200);
+      delay(150);
       clear();
       show();
-      delay(200);
+      delay(150);
     }
   }
 }
@@ -235,13 +237,30 @@ void NeoClock::setTime()
           break;
       }
     }
-    else if(getSettingButton().isValid() && getSettingButton().isPressed())
+    else if(getSettingButton().isValid() && getSettingButton().isTapped())
     {
       type++;
+      for(uint8_t i = 0; i < 3; i++)
+      {
+        showTime();
+        show();
+        delay(150);
+        clear();
+        show();
+        delay(150);
+      }
     }
     t = (t + 1) % 1500;
     setCurrentTime(d);
     clear();
   }
+}
+bool NeoClock::getDoMix()
+{
+  return doMix;
+}
+void NeoClock::setDoMix(bool d)
+{
+  doMix = d;
 }
 

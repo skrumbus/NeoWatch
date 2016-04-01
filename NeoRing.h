@@ -22,5 +22,6 @@ class NeoRing
     void mixColorToPixel(int16_t, int16_t, int16_t, uint32_t, uint32_t);
     bool getIsBackwards();
     void setIsBackwards(bool);
+    void fadeOut(float = .5);
 };
 #endif

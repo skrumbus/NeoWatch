@@ -22,8 +22,10 @@ class NeoClock
     bool hasNotification;
     bool doShowSecond, doShowMinute;
     bool hasAlarm;
+    bool doMix;
     void buttonResponse();
     void incrementBrightness(bool);
+    void setTime();
   public:
     NeoClock(uint16_t, uint8_t = 6, neoPixelType = NEO_GRB + NEO_KHZ800, DateTime = DateTime(), DateTime = DateTime(), Button show = Button(), Button set = Button(), Button bt = Button(), PatternSettings = PatternSettings());
     Button getShowButton();
@@ -43,7 +45,7 @@ class NeoClock
     void update();
     void update(DateTime);
     void update(RtcDateTime);
-    void showTime(bool = false);
+    void showTime();
     void begin(uint8_t = INPUT_PULLUP);
     NeoClock& operator++(int);
     DateTime getCurrentTime();
@@ -52,7 +54,8 @@ class NeoClock
     void setAlarm(DateTime);
     bool getHasAlarm();
     void setHasAlarm(bool);
-    void setTime();
+    bool getDoMix();
+    void setDoMix(bool);
 };
 
 #endif

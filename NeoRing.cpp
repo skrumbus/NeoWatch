@@ -27,7 +27,6 @@ void NeoRing::spiral(uint32_t startColor, uint32_t endColor, uint8_t startPixel,
   {
     float colorP = 1.0 - getPercentage((float)i / (len - 1) );
     setPixelColor((i + startPixel) % numPixels(), ColorStuff::darken(ColorStuff::mix(startColor, endColor, colorP), brightness));
-    Serial.println((i + startPixel) % numPixels() );
   }
 }
 void NeoRing::sparkle(uint32_t startColor, uint32_t endColor, bool doSparkle, float brightness)
@@ -56,21 +55,31 @@ void NeoRing::marquee(uint32_t dotColor, uint32_t spaceColor, uint8_t dots, uint
 {
   reverse = ((reverse && !isBackwards) || (!reverse && isBackwards));
   dots = constrain(dots, 0, numPixels() - 1);
-  spaces = constrain(spaces, 0, numPixels() -1);
+  spaces = constrain(spaces, 0, numPixels() - 1);
   startPixel = constrain(startPixel, 0, numPixels() - 1);
+  Serial.println("start");
+  Serial.println(reverse);
+  Serial.println(dots);
+  Serial.println(spaces);
+  Serial.println(startPixel);
   uint8_t j = 0;
   if(reverse)
   {
     uint32_t temp = dotColor;
     dotColor = spaceColor;
     spaceColor = temp;
+    temp = dots;
+    dots = spaces;
+    spaces = temp;
   }
   for (uint8_t i = (reverse ? numPixels() - 1 : 0); i >= 0 && i < numPixels(); (reverse? i -= max(1, j) : i += max(1, j)))
   {
-    j = (reverse? dots - 1 : 0);
-    for (; j < dots && j >= 0; (reverse? j-- : j++))
+    Serial.println(i);
+    j = (reverse? dots + spaces - 1 : 0);
+    Serial.println(j);
+    for (; (reverse? j < dots + spaces && j >= 0 : j < dots); (reverse? j-- : j++))
       setPixelColor((j + i + startPixel) % numPixels(), dotColor);
-    for (; j < dots && j >= 0; (reverse? j-- : j++))
+    for (; (reverse? j < dots + spaces && j >= 0 : j < spaces + dots); (reverse? j-- : j++))
       setPixelColor((j + i + startPixel) % numPixels(), spaceColor);
   }
 }
@@ -94,10 +103,25 @@ void NeoRing::mixColorToPixel(int16_t value, int16_t min, int16_t max, uint32_t 
   float i = constrain(ColorStuff::betterMap(value, min, max, 0, (float)numPixels() - .01), 0, (float)numPixels() - .01);
   uint32_t oldColor = getPixelColor(floor(i));
   uint32_t newColor = ColorStuff::mix(color1, color2, i - (float)floor(i));
-  Serial.println(value);
-  Serial.println(i);
-  Serial.println(newColor);
   if (oldColor != 0)
     newColor = ColorStuff::mix(oldColor, newColor);
   setPixelColor(floor(i), newColor);
 }
+void NeoRing::fadeOut(float percentage)
+{
+  percentage = constrain(percentage, 0.0, 1.0);
+  for(int i = 0; i < numPixels(); i++)
+  {
+    uint32_t c = getPixelColor(i);
+    setPixelColor(i, ColorStuff::darken(c, percentage));
+  }
+}
+void NeoRing::setIsBackwards(bool b)
+{
+  isBackwards = b;
+}
+bool NeoRing::getIsBackwards()
+{
+  return isBackwards;
+}
+
