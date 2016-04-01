@@ -13,7 +13,7 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
       wasPressed = b.isPressed();
       for(uint8_t i = 0; b.isPressed(); i = (i + 1) % ring.numPixels())
       {
-        ring.rainbow(i, ring.numPixels(), 0);
+        ring.rainbow(i, ring.numPixels());
         ring.show();
         for(int j = 0; j < 50 && b.isPressed(); j += 10, b.update(10), delay(10));
       }
@@ -24,7 +24,7 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
       wasPressed = b.isPressed();
       for(uint8_t i = 0; b.isPressed(); i = (i + 1) % ring.numPixels())
       {
-        ring.spiral(ColorStuff::red(), ColorStuff::green(), i % ring.numPixels(), ring.numPixels(), 0);
+        ring.spiral(ColorStuff::red(), ColorStuff::green(), i % ring.numPixels(), ring.numPixels());
         ring.show();
         for(uint8_t j = 0; j < 50 && b.isPressed(); j += 10, b.update(10), delay(10));
       }
@@ -36,7 +36,7 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
       bool flip = false;
       for(uint8_t i = 1; b.isPressed();)
       {
-        ring.glow(ColorStuff::blue(), ColorStuff::green(),(float) i / 100, 0);
+        ring.glow(ColorStuff::blue(), ColorStuff::green(), 0);
         ring.show();
         delay(10);
         b.update(10);
@@ -57,17 +57,6 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button b)
         ring.marquee(ColorStuff::mix(ColorStuff::green(), ColorStuff::blue()), ColorStuff::green(), 2, 2, i);
         ring.show();
         for(uint8_t j = 0; j < 250 && b.isPressed(); j += 10, b.update(10), delay(10));
-      }
-      break;
-    }
-    case 4:
-    {
-      wasPressed = b.isPressed();
-      for(uint8_t i = 0; b.isPressed(); i = (i + 1) % ring.numPixels())
-      {
-        ring.spiral(ColorStuff::red(), ColorStuff::green(), ((int)i + 1) * -1, ring.numPixels(), 0);
-        ring.show();
-        for(uint8_t j = 0; j < 50 && b.isPressed(); j += 10, b.update(10), delay(10));
       }
       break;
     }

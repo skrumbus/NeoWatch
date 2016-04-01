@@ -1,33 +1,31 @@
 #ifndef NEO_CLOCK
 #define NEO_CLOCK
 
+#define MAX_BRIGHTNESS 48
+#define MIN_BRIGHTNESS 8
+
 #include"NeoRing.h"
 #include"Button.h"
 #include"PatternSettings.h"
+#include"DateTime.h"
 #include <RtcDS3231.h>
 
 class NeoClock
   :public NeoRing
 {
   private:
-    uint32_t seconds;
+    DateTime now, alarm;
     Button showButton;
     Button settingButton;
     Button btButton;
     PatternSettings pattern;
     bool hasNotification;
-    uint32_t hourToSeconds(uint8_t);
-    uint32_t minuteToSeconds(uint8_t);
     bool doShowSecond, doShowMinute;
+    bool hasAlarm;
+    void buttonResponse();
+    void incrementBrightness(bool);
   public:
-    NeoClock(uint16_t, uint8_t = 6, neoPixelType = NEO_GRB + NEO_KHZ800, uint32_t = 0, Button show = Button(), Button set = Button(), Button bt = Button(), PatternSettings = PatternSettings());
-    NeoClock(uint16_t, uint8_t, neoPixelType, uint8_t, uint8_t, uint8_t, Button show = Button(), Button set = Button(), Button bt = Button(), PatternSettings = PatternSettings());
-    uint8_t getSecond();
-    void setSecond(uint8_t);
-    uint8_t getMinute();
-    void setMinute(uint8_t);
-    uint8_t getHour();
-    void setHour(uint8_t);
+    NeoClock(uint16_t, uint8_t = 6, neoPixelType = NEO_GRB + NEO_KHZ800, DateTime = DateTime(), DateTime = DateTime(), Button show = Button(), Button set = Button(), Button bt = Button(), PatternSettings = PatternSettings());
     Button getShowButton();
     void setShowButton(Button);
     Button getSettingButton();
@@ -42,11 +40,19 @@ class NeoClock
     void setDoShowMinute(bool);
     PatternSettings getPattern();
     void setPattern(PatternSettings);
-    void update(uint8_t, uint8_t, uint8_t);
-    void update(RtcDS3231);
+    void update();
+    void update(DateTime);
+    void update(RtcDateTime);
     void showTime(bool = false);
     void begin(uint8_t = INPUT_PULLUP);
-    NeoClock operator++(int);
+    NeoClock& operator++(int);
+    DateTime getCurrentTime();
+    void setCurrentTime(DateTime);
+    DateTime getAlarm();
+    void setAlarm(DateTime);
+    bool getHasAlarm();
+    void setHasAlarm(bool);
+    void setTime();
 };
 
 #endif

@@ -12,35 +12,50 @@
 
 #define NUM_PIXELS 12
 #define SHOW_BUTTON_PIN 3
+#define SETTING_BUTTON_PIN 4
 #define PIXEL_PIN 2
+#define UNUSED_PIN 10
 
 /*NeoRing ring = NeoRing(NUM_PIXELS, PIXEL_PIN);
 uint8_t k = 0;
 Button b = Button(3, LOW);*/
+uint8_t k = 0;
+Button show = Button(SHOW_BUTTON_PIN, LOW);
+Button set = Button(SETTING_BUTTON_PIN, LOW);
+uint32_t color = 0xff0000;
 
-NeoClock myClock = NeoClock(NUM_PIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800, 0, Button(SHOW_BUTTON_PIN, LOW));
+NeoClock myClock = NeoClock(NUM_PIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800, DateTime(), DateTime(), show, set);
 
 void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(UNUSED_PIN));
   myClock.begin();
-  myClock.setBrightness(32);
+  myClock.setBrightness(48);
   myClock.clear();
   myClock.show();
-  //myClock.setDoShowSecond(false);
-  /*ring.begin();
-  ring.setBrightness(16);
-  b.begin();
-  ring.clear();
-  ring.show();*/
 }
 
 void loop() 
 {
-  myClock.showTime(true);
-  myClock.show();
-  /*if(NotificationDemo::demo(ring, k, b))
-    k = (k + 1) % NotificationDemo::NUM_DEMOS;
-  ring.clear();
-  ring.show();*/
+  myClock.clear();
   myClock++;
-  delay(10);
+  for(int i = 0; i < 1000; i += 10)
+  {
+    delay(10);
+    myClock.update();
+    myClock.show();
+  }
+  /*myClock.clear();
+  myClock++.showTime();
+  myClock.show();
+  delay(1000);
+  /*myClock.spiral(0xff0000, 0x000000, 4, myClock.numPixels(), 1.0, true);
+  myClock.show();
+  delay(1000);
+  myClock.clear();
+  myClock.spiral(0xff0000, 0x000000, 4, myClock.numPixels());
+  myClock.show();
+  delay(1000);
+  myClock.clear();*/
+  
 }

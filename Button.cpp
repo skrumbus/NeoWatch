@@ -2,10 +2,10 @@
 
 Button::Button()
 {
-  this->pin = 255;
-  this->onState = 255;
+  this->pin = 0;
+  this->onState = 0;
   setHoldTime(65535);
-  state = 0;
+  state = 255;
 }
 Button::Button(uint8_t pin, uint8_t onState, uint16_t holdTime)
 {
@@ -28,7 +28,7 @@ bool Button::isTapped()
 }
 bool Button::isPressed()
 {
-  return (getState() == 1 || getState() == 2);
+  return (getState() == 1 || getState() == 2 || getState() == 3);
 }
 bool Button::isHeld()
 {
@@ -38,7 +38,7 @@ void Button::update(uint16_t t)
 {
   if(digitalRead(pin) == onState)
   {
-    state = 1;
+    state = (state == 1 || state == 3? 3 : 1);
     hold += t;
     if(hold >= holdTime)
       state = 2;
@@ -57,5 +57,10 @@ uint16_t Button::getHoldTime()
 void Button::begin(uint8_t type)
 {
   pinMode(pin, type);
+}
+bool Button::isValid()
+{
+  return ((onState == HIGH || onState == LOW) &&
+          (state == 0 || state == 1 || state == 2 || state == 3));
 }
 
