@@ -227,7 +227,7 @@ void NeoClock::setTime()
       switch(type)
       {
         case 0:
-          d.setHour((d.getHour() + 1) % 23);
+          d.setHour((d.getHour() + 1) % 24);
           break;
         case 1:
           d.setMinute((d.getMinute() + 1) % 60);
