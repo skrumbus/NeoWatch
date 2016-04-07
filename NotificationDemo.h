@@ -7,7 +7,7 @@
 class NotificationDemo
 {
   public:
-    const static uint8_t NUM_DEMOS = 4;
+    const static uint8_t NUM_DEMOS = 5;
     static bool demo(NeoRing&, uint8_t, Button&);
 };
 

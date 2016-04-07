@@ -34,7 +34,7 @@ void NeoRing::sparkle(uint32_t startColor, uint32_t endColor, bool doSparkle, fl
   for(int i = 0; i < numPixels(); i++)
   {
     uint32_t c = getPixelColor(i);
-    c = ColorStuff::mix(c, endColor, .1);
+    c = ColorStuff::mix(c, endColor, .05);
     setPixelColor(i, c);
   }
   if(doSparkle)

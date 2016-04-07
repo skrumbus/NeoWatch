@@ -206,7 +206,6 @@ void NeoClock::setTime()
     settingButton.update();
     t = (t + 1) % 1500;
   }
-  delay(100);
   t = 0;
   while(type < 3)
   {

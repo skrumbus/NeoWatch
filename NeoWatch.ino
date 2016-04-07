@@ -58,6 +58,9 @@ void loop()
       myClock.show();
     }
   }
+  /*myClock.sparkle(0xff0000, 0xff00ff, random(3) == 0);
+  delay(100);
+  myClock.show();*/
   /*myClock.clear();
   myClock++.showTime();
   myClock.show();
