@@ -2,6 +2,7 @@
 #define NEO_RING
 
 #include<Adafruit_NeoPixel.h>
+#include"Pattern.h"
 
 class NeoRing
   :public Adafruit_NeoPixel
@@ -23,5 +24,6 @@ class NeoRing
     bool getIsBackwards();
     void setIsBackwards(bool);
     void fadeOut(float = .5);
+    void runPattern(Pattern);
 };
 #endif

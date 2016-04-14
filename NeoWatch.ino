@@ -1,21 +1,22 @@
+
 #include"NeoRing.h"
 #include"NeoClock.h"
 #include"Button.h"
 #include"NotificationDemo.h"
 #include"PatternSettings.h"
 #include<Adafruit_NeoPixel.h>
-#include<RtcDS3231.h>
-#include<Wire.h>
+//#include<RtcDS3231.h>
+//#include<Wire.h>
 
 //TO DO:
 //IMPLEMENT PASS NEGATIVE NUMBERS AS START AND END PIXELS TO SIGNIFY REVERSE
 
 #define NUM_PIXELS 12
-#define SHOW_BUTTON_PIN 4
-#define SETTING_BUTTON_PIN 5
-#define PIXEL_PIN 2
-#define UNUSED_PIN 10
-#define DEMO_PIN 3
+#define SHOW_BUTTON_PIN 12
+#define SETTING_BUTTON_PIN 10
+#define PIXEL_PIN 9
+#define UNUSED_PIN 11
+#define DEMO_PIN 5
 
 /*NeoRing ring = NeoRing(NUM_PIXELS, PIXEL_PIN);
 uint8_t k = 0;

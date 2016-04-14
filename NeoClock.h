@@ -6,9 +6,9 @@
 
 #include"NeoRing.h"
 #include"Button.h"
-#include"PatternSettings.h"
+#include"Pattern.h"
 #include"DateTime.h"
-#include <RtcDS3231.h>
+//#include <RtcDS3231.h>
 
 class NeoClock
   :public NeoRing
@@ -18,7 +18,7 @@ class NeoClock
     Button showButton;
     Button settingButton;
     Button btButton;
-    PatternSettings pattern;
+    Pattern pattern;
     bool hasNotification;
     bool doShowSecond, doShowMinute;
     bool hasAlarm;
@@ -27,7 +27,7 @@ class NeoClock
     void incrementBrightness(bool);
     void setTime();
   public:
-    NeoClock(uint16_t, uint8_t = 6, neoPixelType = NEO_GRB + NEO_KHZ800, DateTime = DateTime(), DateTime = DateTime(), Button show = Button(), Button set = Button(), Button bt = Button(), PatternSettings = PatternSettings());
+    NeoClock(uint16_t, uint8_t = 6, neoPixelType = NEO_GRB + NEO_KHZ800, DateTime = DateTime(), DateTime = DateTime(), Button show = Button(), Button set = Button(), Button bt = Button(), Pattern = Pattern());
     Button getShowButton();
     void setShowButton(Button);
     Button getSettingButton();
@@ -40,11 +40,11 @@ class NeoClock
     void setDoShowSecond(bool);
     bool getDoShowMinute();
     void setDoShowMinute(bool);
-    PatternSettings getPattern();
-    void setPattern(PatternSettings);
+    Pattern getPattern();
+    void setPattern(Pattern);
     void update();
     void update(DateTime);
-    void update(RtcDateTime);
+//    void update(RtcDateTime);
     void showTime();
     void begin(uint8_t = INPUT_PULLUP);
     NeoClock& operator++(int);

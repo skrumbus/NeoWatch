@@ -2,7 +2,7 @@
 #include<Arduino.h>
 #include"ColorStuff.h"
 
-NeoClock::NeoClock(uint16_t num, uint8_t pin, neoPixelType n, DateTime now, DateTime alarm, Button show, Button set, Button bt, PatternSettings pattern)
+NeoClock::NeoClock(uint16_t num, uint8_t pin, neoPixelType n, DateTime now, DateTime alarm, Button show, Button set, Button bt, Pattern pattern)
   :NeoRing(num, pin, n),
    now(now),
    alarm(alarm),
@@ -49,11 +49,11 @@ void NeoClock::setHasNotification(bool n)
 {
   hasNotification = n;
 }
-PatternSettings NeoClock::getPattern()
+Pattern NeoClock::getPattern()
 {
   return pattern;
 }
-void NeoClock::setPattern(PatternSettings p)
+void NeoClock::setPattern(Pattern p)
 {
   pattern = p;
 }
@@ -69,10 +69,10 @@ void NeoClock::update(DateTime t)
   btButton.update();
   buttonResponse();
 }
-void NeoClock::update(RtcDateTime t)
+/*void NeoClock::update(RtcDateTime t)
 {
   update(DateTime(t.Second(), t.Minute(), t.Hour(), t.Day(), t.Month(), t.Year()));
-}
+}*/
 void NeoClock::showTime()
 {
   if(doMix)
