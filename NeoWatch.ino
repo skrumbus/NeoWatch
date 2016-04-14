@@ -7,12 +7,24 @@
 #include"ColorStuff.h"
 #include<Adafruit_NeoPixel.h>
 
-#define NUM_PIXELS 12
-#define SHOW_BUTTON_PIN 12
-#define SETTING_BUTTON_PIN 10
-#define PIXEL_PIN 9
-#define UNUSED_PIN 11
-#define DEMO_PIN 5
+#define IS_FEATHER 1
+
+#if IS_FEATHER == 0
+  #define NUM_PIXELS 12
+  #define SHOW_BUTTON_PIN 4
+  #define SETTING_BUTTON_PIN 5
+  #define PIXEL_PIN 2
+  #define UNUSED_PIN 0
+  #define DEMO_PIN 3
+#endif
+#if IS_FEATHER == 1
+  #define NUM_PIXELS 12
+  #define SHOW_BUTTON_PIN 12
+  #define SETTING_BUTTON_PIN 10
+  #define PIXEL_PIN 9
+  #define UNUSED_PIN 11
+  #define DEMO_PIN 5
+#endif
 
 /*NeoRing ring = NeoRing(NUM_PIXELS, PIXEL_PIN);
 uint8_t k = 0;
