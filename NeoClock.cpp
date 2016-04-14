@@ -12,10 +12,13 @@ NeoClock::NeoClock(uint16_t num, uint8_t pin, neoPixelType n, DateTime now, Date
    pattern(pattern)
 {
   setDoShowMinute(true);
-  setDoShowSecond(true);
   doMix = false;
   hasAlarm = false;
   hasNotification = false;
+  setMinutePrimary(0xFF0000);
+  setMinuteSecondary(0xFF0000);
+  setHourAm(0xFFFFFF);
+  setHourPm(0xFFFFFF);
 }
 Button NeoClock::getShowButton()
 {
@@ -77,19 +80,15 @@ void NeoClock::showTime()
 {
   if(doMix)
   {
-    mixColorToPixel(getCurrentTime().getHour() % 12, 0, 11, ColorStuff::white(), ColorStuff::white());
+    mixColorToPixel(getCurrentTime().getHour() % 12, 12, (getCurrentTime().getHour() >= 12? getHourPm() : getHourAm()), (getCurrentTime().getHour() >= 12? getHourPm() : getHourAm()));
     if(doShowMinute)
-      mixColorToPixel(getCurrentTime().getMinute(), 0, 59, ColorStuff::red(), ColorStuff::blue());
-    if(doShowSecond)
-      mixColorToPixel(getCurrentTime().getSecond(), 0, 59, ColorStuff::green(), ColorStuff::blue());
+      mixColorToPixel(getCurrentTime().getMinute(), 60, getMinutePrimary(), getMinuteSecondary());
   }
   else
   {
-    mapColorToPixel(getCurrentTime().getHour() % 12, 0, 11, ColorStuff::white(), ColorStuff::white());
+    mapColorToPixel(getCurrentTime().getHour() % 12, 12, (getCurrentTime().getHour() >= 12? getHourPm() : getHourAm()), (getCurrentTime().getHour() >= 12? getHourPm() : getHourAm()));
     if(doShowMinute)
-      mapColorToPixel(getCurrentTime().getMinute(), 0, 59, ColorStuff::red(), ColorStuff::blue());
-    if(doShowSecond)
-      mapColorToPixel(getCurrentTime().getSecond(), 0, 59, ColorStuff::green(), ColorStuff::red());
+      mapColorToPixel(getCurrentTime().getMinute(), 60, getMinutePrimary(), getMinuteSecondary());
   }
 }
 void NeoClock::begin(uint8_t type)
@@ -100,14 +99,6 @@ void NeoClock::begin(uint8_t type)
   settingButton.begin(type);
 }
 
-bool NeoClock::getDoShowSecond()
-{
-  return doShowSecond;
-}
-void NeoClock::setDoShowSecond(bool b)
-{
-  doShowSecond = b;
-}
 bool NeoClock::getDoShowMinute()
 {
   return doShowMinute;
@@ -206,8 +197,7 @@ void NeoClock::setTime()
     settingButton.update();
     t = (t + 1) % 1500;
   }
-  t = 0;
-  while(type < 3)
+  while(type < 2)
   {
     switch(t / 1000)
     {
@@ -221,6 +211,7 @@ void NeoClock::setTime()
     show();
     showButton.update();
     settingButton.update();
+    d.setSecond(0);
     if(getShowButton().isValid() && getShowButton().isTapped())
     {
       switch(type)
@@ -230,9 +221,6 @@ void NeoClock::setTime()
           break;
         case 1:
           d.setMinute((d.getMinute() + 1) % 60);
-          break;
-        case 2:
-          d.setSecond((d.getSecond() + 1) % 60);
           break;
       }
     }
@@ -262,4 +250,35 @@ void NeoClock::setDoMix(bool d)
 {
   doMix = d;
 }
-
+uint32_t NeoClock::getMinutePrimary()
+{
+  return minPrimary;
+}
+void NeoClock::setMinutePrimary(uint32_t minPrimary)
+{
+  this->minPrimary = minPrimary;
+}
+uint32_t NeoClock::getMinuteSecondary()
+{
+  return minSecondary;
+}
+void NeoClock::setMinuteSecondary(uint32_t minSecondary)
+{
+  this->minSecondary = minSecondary;
+}
+uint32_t NeoClock::getHourAm()
+{
+  return hourAm;
+}
+void NeoClock::setHourAm(uint32_t hourAm)
+{
+  this->hourAm = hourAm;
+}
+uint32_t NeoClock::getHourPm()
+{
+  return hourPm;
+}
+void NeoClock::setHourPm(uint32_t hourPm)
+{
+  this->hourPm = hourPm;
+}

@@ -21,6 +21,8 @@ class NeoRing
     void rainbow(uint8_t, uint8_t, float = 1.0, bool = false); //rainbow from pixel to pixel fade to x
     void mapColorToPixel(int16_t, int16_t, int16_t, uint32_t, uint32_t);
     void mixColorToPixel(int16_t, int16_t, int16_t, uint32_t, uint32_t);
+    void mapColorToPixel(int16_t, int16_t, uint32_t, uint32_t);
+    void mixColorToPixel(int16_t, int16_t, uint32_t, uint32_t);
     bool getIsBackwards();
     void setIsBackwards(bool);
     void fadeOut(float = .5);

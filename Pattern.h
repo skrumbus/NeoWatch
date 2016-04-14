@@ -12,6 +12,8 @@ class Pattern
     uint8_t type;
     float brightness;
     uint16_t displayLength, delayLength;
+    float speed;
+
     int16_t startPixel;
     uint8_t numPixels;
     uint32_t colors[MAX_PATTERN_COLORS];

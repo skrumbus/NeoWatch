@@ -51,7 +51,7 @@ void NeoRing::flash(uint32_t color)
   for (uint8_t i = 0; i < numPixels(); i++)
     setPixelColor(i, color);
 }
-void NeoRing::marquee(uint32_t dotColor, uint32_t spaceColor, uint8_t dots, uint8_t spaces, uint8_t startPixel, float brightness, bool reverse) //1, 2, 3, and 5 are optimal for spacing
+void NeoRing::marquee(uint32_t dotColor, uint32_t spaceColor, uint8_t dots, uint8_t spaces, uint8_t startPixel, float brightness, bool reverse) //ideally the dots and spaces should add up to a factor of the number of pixels
 {
   reverse = ((reverse && !isBackwards) || (!reverse && isBackwards));
   dots = constrain(dots, 0, numPixels() - 1);
@@ -93,6 +93,13 @@ void NeoRing::rainbow(uint8_t startPixel, uint8_t len, float brightness, bool re
     setPixelColor((i + startPixel) % numPixels(), ColorStuff::fadeRainbowify(i, len - 1));
   }
 }
+void NeoRing::mapColorToPixel(int16_t value, int16_t len, uint32_t color1, uint32_t color2)
+{
+  uint16_t interval = len / numPixels();
+  uint8_t pixel = value / interval;
+  float colorDifference = (float)(value % interval) / (float)(interval == 1? 1 : interval - 1);
+  setPixelColor(pixel, ColorStuff::mix(color1, color2, colorDifference));
+}
 void NeoRing::mapColorToPixel(int16_t value, int16_t min, int16_t max, uint32_t color1, uint32_t color2)
 {
   float i = constrain(ColorStuff::betterMap(value, min, max, 0, (float)numPixels() - .01), 0, (float)numPixels() - .01);
@@ -106,6 +113,17 @@ void NeoRing::mixColorToPixel(int16_t value, int16_t min, int16_t max, uint32_t 
   if (oldColor != 0)
     newColor = ColorStuff::mix(oldColor, newColor);
   setPixelColor(floor(i), newColor);
+}
+void NeoRing::mixColorToPixel(int16_t value, int16_t len, uint32_t color1, uint32_t color2)
+{
+  uint16_t interval = len / numPixels();
+  uint8_t pixel = value / interval;
+  float colorDifference = (float)(value % interval) / (float)(interval == 1? 1 : interval - 1);
+  uint32_t oldColor = getPixelColor(pixel);
+  uint32_t newColor = ColorStuff::mix(color1, color2, colorDifference);
+  if (oldColor != 0)
+    newColor = ColorStuff::mix(oldColor, newColor);
+  setPixelColor(pixel, newColor);
 }
 void NeoRing::fadeOut(float percentage)
 {

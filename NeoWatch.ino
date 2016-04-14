@@ -1,15 +1,11 @@
-
+ 
 #include"NeoRing.h"
 #include"NeoClock.h"
 #include"Button.h"
 #include"NotificationDemo.h"
-#include"PatternSettings.h"
+#include"Pattern.h"
+#include"ColorStuff.h"
 #include<Adafruit_NeoPixel.h>
-//#include<RtcDS3231.h>
-//#include<Wire.h>
-
-//TO DO:
-//IMPLEMENT PASS NEGATIVE NUMBERS AS START AND END PIXELS TO SIGNIFY REVERSE
 
 #define NUM_PIXELS 12
 #define SHOW_BUTTON_PIN 12
@@ -32,9 +28,14 @@ void setup()
 {
   randomSeed(analogRead(UNUSED_PIN));
   myClock.begin();
-  myClock.setBrightness(48);
+  myClock.setBrightness(15);
   myClock.clear();
   myClock.show();
+  myClock.setDoMix(true);
+  myClock.setMinutePrimary(ColorStuff::red());
+  myClock.setMinuteSecondary(ColorStuff::blue());
+  myClock.setHourAm(ColorStuff::green());
+  myClock.setHourPm(ColorStuff::orange());
   demo.begin();
 }
 
@@ -49,7 +50,6 @@ void loop()
       k = (k + 1) % NotificationDemo::NUM_DEMOS;
   }
   else
-  {
     for(int i = 0; i < 1000 && !demo.isPressed(); i += 10)
     {
       myClock.clear();
@@ -58,7 +58,7 @@ void loop()
       myClock.update();
       myClock.show();
     }
-  }
+  
   /*myClock.sparkle(0xff0000, 0xff00ff, random(3) == 0);
   delay(100);
   myClock.show();*/

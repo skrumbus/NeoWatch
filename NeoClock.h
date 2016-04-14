@@ -20,9 +20,10 @@ class NeoClock
     Button btButton;
     Pattern pattern;
     bool hasNotification;
-    bool doShowSecond, doShowMinute;
+    bool  doShowMinute;
     bool hasAlarm;
     bool doMix;
+    uint32_t minPrimary, minSecondary, hourAm, hourPm;
     void buttonResponse();
     void incrementBrightness(bool);
     void setTime();
@@ -36,8 +37,6 @@ class NeoClock
     void setBtButton(Button);
     bool getHasNotification();
     void setHasNotification(bool);
-    bool getDoShowSecond();
-    void setDoShowSecond(bool);
     bool getDoShowMinute();
     void setDoShowMinute(bool);
     Pattern getPattern();
@@ -56,6 +55,14 @@ class NeoClock
     void setHasAlarm(bool);
     bool getDoMix();
     void setDoMix(bool);
+    uint32_t getMinutePrimary();
+    void setMinutePrimary(uint32_t);
+    uint32_t getMinuteSecondary();
+    void setMinuteSecondary(uint32_t);
+    uint32_t getHourAm();
+    void setHourAm(uint32_t);
+    uint32_t getHourPm();
+    void setHourPm(uint32_t);
 };
 
 #endif

@@ -62,6 +62,8 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button& b)
     }
     case 4:
     {
+      wasPressed = b.isPressed();
+      ring.flash(ColorStuff::blue());
       while(b.isPressed())
       {
         ring.sparkle(ColorStuff::red(), ColorStuff::blue(), random(5) == 0);
@@ -69,7 +71,6 @@ bool NotificationDemo::demo(NeoRing& ring, uint8_t type, Button& b)
         //for(uint8_t j = 0; j < 100 && b.isPressed(); j += 10, b.update(10), delay(10));
         b.update();
       }
-      wasPressed = b.isPressed();
       break;
     }
   }
